@@ -3,7 +3,7 @@
 Evaluating different strategies for late chunking on long-context documents. Methods tested:
 
 * Word Chunking: Input word based chunking
-* Late Chunking: Output vector based chunking
+* Late Chunking: Output vector based chunking. Based on, Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models
 
 ## Method: 
 * **Word Chunking**: 
@@ -15,6 +15,14 @@ Evaluating different strategies for late chunking on long-context documents. Met
     - The document is fully encoded into all token vectors.
     - These token vectors are separated into `n_chunks` number of chunks. Each of almost equal length. 
     - Mean pooling is performed for each chunk separately to get `n_chunks` chunked vectors. 
+
+### Implementation Caveats: 
+Description of how the implemented late chunking deviates from the [paper](https://arxiv.org/abs/2409.04701) 
+
+Late Chunking: 
+* Chunk documents based on the desired number of chunks rather than the token length of each chunk:
+    * In practical industrial applications, documents are often divided into a small number of chunks to optimize efficiency. This approach greatly reduces memory storage requirements and minimizes retrieval latency.
+    * The original paper uses token-based chunking, so the metrics in this implementation may not align perfectly with the results reported in their table.
 
 ### Metrics: 
 * Topk @ 1, 3
