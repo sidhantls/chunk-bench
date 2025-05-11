@@ -16,6 +16,9 @@ Evaluating different strategies for late chunking on long-context documents. Met
     - These token vectors are separated into `n_chunks` number of chunks. Each of almost equal length. 
     - Mean pooling is performed for each chunk separately to get `n_chunks` chunked vectors. 
 
+### Metrics: 
+* Topk @ 1, 3
+
 ### Implementation Caveats: 
 Description of how the implemented late chunking deviates from the [paper](https://arxiv.org/abs/2409.04701) 
 
@@ -24,10 +27,6 @@ Late Chunking:
     * In practical industrial applications, documents are often divided into a small number of chunks to optimize efficiency. This approach greatly reduces memory storage requirements and minimizes retrieval latency.
     * The original paper uses token-based chunking, so the metrics in this implementation may not align perfectly with the results reported in their table.
 
-### Metrics: 
-* Topk @ 1, 3
-
-* Late Chunking: A 
 ## Requirements
 Install the required dependencies using the `requirements.txt` file:
 ```bash
