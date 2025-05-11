@@ -18,6 +18,7 @@ Evaluating different strategies for late chunking on long-context documents. Met
 
 ### Metrics: 
 * Topk @ 1, 3
+* Dataset: [Loco-v1](https://huggingface.co/datasets/hazyresearch/LoCoV1-Documents)
 
 ### Implementation Caveats: 
 Description of how the implemented late chunking deviates from the [paper](https://arxiv.org/abs/2409.04701) 
