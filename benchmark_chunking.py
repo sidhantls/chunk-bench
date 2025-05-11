@@ -34,10 +34,10 @@ def parse_arguments():
     parser.add_argument('--num_chunks', type=int, default=5,
                         help='Number of chunks per text')
     parser.add_argument('--chunking_type', type=str, default='default',
-                        choices=['default', 'late', 'token', 'word'],
+                        choices=['late', 'word'],
                         help='Chunking type: default or late')
     parser.add_argument('--max_doc_tokens', type=int, default=None,
-                        help='Maximum document length for truncation (default: None)')
+                        help='Truncate all documents to this number of words')
 
     return parser.parse_args()
 
@@ -419,27 +419,6 @@ def truncate_docs_by_words(docs_by_ds, tokenizer=None, max_doc_tokens=None):
                 words = doc['passage'].split()
                 if len(words) > max_doc_tokens:
                     doc['passage'] = " ".join(words[:max_doc_tokens])
-
-# if __name__ == "__main__":
-#     args = parse_arguments()
-#     docs, qrys = load_and_filter_datasets()
-#     model, tok, dev = initialize_model_and_tokenizer(args)
-#     docs_by_ds = group_by_dataset(docs, ['dataset','pid','passage'])
-#     qrys_by_ds = group_by_dataset(qrys, ['dataset','qid','query','answer_pids'])
-
-#     if args.chunking_type == 'late':
-#         indices, id_maps, fwd_times, mem_stats = build_indices_late_chunking(
-#         model, tok, docs_by_ds, args)
-
-#     elif args.chunking_type == 'word':
-#         indices, id_maps, fwd_times, mem_stats = build_indices_word_chunking(
-#             model, tok, docs_by_ds, args)
-#     else:
-#         raise ValueError("Invalid chunking type. Use 'late' or 'default'.")
-
-#     metrics = evaluate_retrieval(
-#         model, tok, docs_by_ds, qrys_by_ds, indices, id_maps, args)
-#     save_metrics(metrics, args)
 
 
 if __name__ == "__main__":
