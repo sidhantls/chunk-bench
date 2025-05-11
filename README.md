@@ -34,10 +34,6 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-### Parameters
-- `max_length`: Maximum tokens the model can process.
-- `max_doc_tokens`: Truncates all datasets to be less than or equal to this number of words.
-
 ### Examples
 Test late chunking that outputs 5 chunk vectors:
 ```bash
@@ -53,3 +49,24 @@ Baseline, no chunking:
 ```bash
 python benchmark_chunking.py --model_name="jinaai/jina-embeddings-v2-small-en" --num_chunks=1 --max_length=4092 --chunking_type="word" --max_doc_tokens=4092
 ```
+
+### Parameters
+- **`max_length`**: *(int, default=4096)*  
+    Maximum number of tokens the model can process in a single chunk.
+
+- **`out_dir`**: *(str, default="results")*  
+    Output directory where results will be saved.
+
+- **`model_name`**: *(str, default="jinaai/jina-embeddings-v2-small-en")*  
+    Name or path of the pretrained embedding model.
+
+- **`num_chunks`**: *(int, default=5)*  
+    Number of chunks each document will be split into.
+
+- **`chunking_type`**: *(str, default="default", choices=["late", "word"])*  
+    Chunking strategy:
+    - **`word`**: Splits the document into word-based chunks before embedding.
+    - **`late`**: Embeds the entire document, then splits the embedding into chunks.
+
+- **`max_doc_tokens`**: *(int, default=None)*  
+    If set, truncate each document to this number of words before chunking or embedding.
