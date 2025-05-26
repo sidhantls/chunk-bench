@@ -15,8 +15,6 @@ import psutil
 import math
 import pdb
 
-# benchmark_chunking.py
-
 import torch.nn.functional as F
 
 # KEEP_DATASETS = ['qmsum', 'legal_case_reports', 'summ_screen_fd', 'qasper_abstract', 'gov_report', 'passage_retrieval']
@@ -352,13 +350,17 @@ def evaluate_retrieval(model, tok, docs_by_ds, qrys_by_ds,
         hits1, hits3 = 0, 0
         for q in tqdm(qrys):
             qry_embs = encode_query(model, tok, q['query'], args)
-            k = 3
+            k = args.num_chunks * 10  
             D, I = idx.search(qry_embs, k)
             cand = {}
             for ci, scores in zip(I, D):
                 for j, sc in zip(ci, scores):
                     pid = pid_map[j]
                     cand[pid] = max(cand.get(pid, -1e9), sc)
+
+                    if len(cand) >= 3: # retrieve top3 
+                        break 
+
             sorted_p = sorted(cand.items(), key=lambda x:-x[1])
             top = [p for p,_ in sorted_p[:3]]
             if q['answer_pids'][0] in top[:1]:
