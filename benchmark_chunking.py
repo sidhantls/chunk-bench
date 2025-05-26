@@ -363,10 +363,13 @@ def evaluate_retrieval(model, tok, docs_by_ds, qrys_by_ds,
 
             sorted_p = sorted(cand.items(), key=lambda x:-x[1])
             top = [p for p,_ in sorted_p[:3]]
-            if q['answer_pids'][0] in top[:1]:
+
+            if top[0] in q['answer_pids']:
                 hits1 += 1
-            if any(a in top for a in q['answer_pids']):
+                
+            if any(a in q['answer_pids'] for a in top):
                 hits3 += 1
+    
         n = len(qrys)
         results[ds] = {
             'hit@1': round(hits1/n, 3),
